@@ -152,5 +152,7 @@ case "${1}" in
     uninstall) uninstall_service ;;
     restart) systemctl restart ${APP_NAME}; log_info "服务已重启。" ;;
     status) show_status ;;
-    *) echo "用法: $0 {install|uninstall|restart|status}"; exit 1 ;;
+    *) 
+      echo "用法: $0 {install|uninstall|restart|status}"
+      exit 1 ;;
 esac
