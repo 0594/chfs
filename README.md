@@ -4,47 +4,111 @@
 ```bash
 curl -sL https://raw.githubusercontent.com/0594/chfs/refs/heads/main/cf6.sh -o /root/chfs.sh && chmod +x /root/chfs.sh && sudo /root/chfs.sh install
 ```
-1. 准备文件  
-   将你仓库中的 `chfs-linux-amd64-3.1.zip` 解压，确保得到 `chfs-linux-amd64-3.1` 可执行文件，并与本脚本放在同一目录。
+---
 
-2. 赋予执行权限
-   ```bash
-   chmod +x chfs-v3.1-deploy.sh
-   ```
+<p align="center">
+  <img src="https://your-image-host.com/chfs-banner.png" alt="CHFS v3.x 轻量HTTP文件服务器" width="800">
+</p>
 
-3. 执行命令（需 root）
-   ```bash
-   仅生成配置（不启动）
-   sudo ./chfs-v3.1-deploy.sh setup
+<h3 align="center">CHFS v3.x - 单文件部署的轻量私有文件服务</h3>
 
-   一键部署并启动（推荐）
-   sudo ./chfs-v3.1-deploy.sh start
+<p align="center">
+  <a href="https://github.com/your-repo/chfs/releases">
+    <img src="https://img.shields.io/github/v/release/your-repo/chfs?color=blue&label=Latest%20Version" alt="Latest Version">
+  </a>
+  <a href="https://github.com/your-repo/chfs/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
+  </a>
+  <a href="https://github.com/your-repo/chfs/stargazers">
+    <img src="https://img.shields.io/github/stars/your-repo/chfs?style=social" alt="GitHub Stars">
+  </a>
+</p>
 
-   停止服务
-   sudo ./chfs-v3.1-deploy.sh stop
+<p align="center">
+  <img src="https://your-image-host.com/demo.gif" alt="快速部署演示" width="700">
+</p>
 
-   彻底卸载（删除所有文件和服务）
-   sudo ./chfs-v3.1-deploy.sh uninstall
-   ```
+<p align="center">
+  无需依赖 · 单二进制文件运行 · 30秒搭建私有文件共享服务
+</p>
 
-🔐 默认配置说明（v3.1 语法）
 
-| 用户名 | 权限 | 路径 | 说明 |
-|--------|------|------|------|
-| `admin` | `full` | 全局 | 管理员，可读写删改 |
-| `anonymous` | `read` | 全局 | 匿名访客，仅可浏览下载 |
-| `upload` | `write` | `/opt/chfs/share/upload` | 匿名上传专用（投递箱） |
-| `private` | `none` | `/opt/chfs/share/private` | 禁止所有访问 |
+---
 
-> ⚠️ 注意：v3.1 不再支持 `rule=` 语法，必须使用 `[user]` 段落定义权限，本脚本已严格遵循官方规范。
+二、快速开始区（用户第一眼就能上手）
+```markdown
+🚀 30秒快速启动
+方式1：直接运行
+```bash
+下载对应平台二进制（以Linux x64为例）
+wget https://github.com/your-repo/chfs/releases/download/v3.1/chfs-linux-amd64-v3.1.zip
+unzip chfs-linux-amd64-v3.1.zip
+chmod +x chfs
 
-📁 文件结构（部署后）
+一键启动，共享当前目录
+./chfs -port=8080 -path=./share
 ```
-/opt/chfs/
-├── chfs-linux-amd64-3.1     可执行文件
-├── chfs.ini                 配置文件（v3.1 格式）
-├── logs/                    日志目录
-└── share/
-    ├── upload/              匿名上传目录
-    └── private/             私有目录（仅管理员可访问）
+
+方式2：一键部署脚本（推荐）
+```bash
+执行我们提供的自动化部署脚本
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/your-repo/chfs/main/scripts/chfs-deploy.sh)"
 ```
+> 脚本自动完成安装、配置Systemd服务、创建共享目录，执行完成后直接访问 `http://你的IP:8080` 即可使用。
+```
+
+---
+
+三、核心特性区（突出v3.x版本亮点）
+```markdown
+✨ 核心特性
+- 📦 零依赖单文件：仅一个可执行程序，无需Java/PHP等运行环境，解压即跑
+- 🔐 灵活权限控制：支持自定义上传/删除/创建目录权限，可配置基础认证保护
+- 🌐 全平台兼容：支持Linux/Windows/macOS/ARM等几乎所有主流架构
+- 📂 WebDAV支持：v3.x原生集成WebDAV协议，可直接挂载为本地磁盘
+- 🔒 HTTPS加密：一键配置证书启用SSL，公网访问更安全
+- 📝 自定义界面：支持自定义网页标题、首页公告，适配内部部署场景
+- 📊 轻量低耗：内存占用<20MB，老旧设备也能流畅运行
+```
+
+---
+
+四、配置参考区（直接复用之前整理的v3.x完整参数）
+```markdown
+⚙️ v3.x 完整配置示例
+创建 `chfs.ini` 即可自定义所有参数：
+```ini
+网络配置
+port=8080
+root=/opt/chfs/share
+auth-type=basic
+username=admin
+password=your_strong_password
+
+权限开关
+allow-upload=true
+allow-delete=false
+allow-create-dir=true
+
+高级功能
+webdav=true
+max-upload-size=0
+log-path=/opt/chfs/log/chfs.log
+```
+修改后执行 `systemctl restart chfs` 即可生效。
+```
+
+---
+
+五、常见问题区（提前覆盖用户高频疑问）
+```markdown
+❓ 常见问题
+1. 启动后无法访问？
+   检查服务器防火墙是否开放8080端口，确认配置文件中`root`路径存在且CHFS有读写权限。
+2. 如何配置HTTPS？
+   在配置文件中添加`cert`和`key`参数，指定你的SSL证书路径即可，无需额外反向代理。
+3. 忘记密码怎么办？
+   直接编辑`chfs.ini`修改`password`字段，重启服务即可生效。
+```
+
+---
