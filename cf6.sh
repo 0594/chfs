@@ -145,17 +145,15 @@ EOF
     setup_cf_command
     
     log_info "安装完成！现在您可以直接使用 'cf' 命令进行管理。"
-    log_info "用法:cf [install|uninstall|restart|status]"
-    log_info "配置文件路径：${INSTALL_DIR}/${APP_NAME}.ini!"
-    log_info "管理员账号admin，密码Admin123,生产环境请先修改默认密码"echo ""
-echo "✅ CHFS 部署完成！"
-echo "🔗 访问地址：http://$(curl -s4 ifconfig.me):8080"
-echo "👤 管理员账号：admin / Admin123"
-echo "🌐 WebDAV 地址：http://$(curl -s4 ifconfig.me):8080/webdav"
-echo ""
-echo "🚀配置文件路径：${INSTALL_DIR}/${APP_NAME}.ini"
-echo "💡快捷命令:cf [install|uninstall|restart|status]"
-echo "💡 建议：首次登录后，请立即修改密码，并考虑配置 HTTPS 提升安全性。"
+    
+    echo "✅ CHFS 部署完成！"
+    echo "✅ 访问地址：http://$(curl -s4 ifconfig.me):8080"
+    echo "✅ 管理员账号：admin / Admin123"
+    echo "✅ WebDAV 地址：http://$(curl -s4 ifconfig.me):8080/webdav"
+    echo ""
+    echo "✅配置文件路径：${INSTALL_DIR}/${APP_NAME}.ini"
+    echo "✅快捷命令:cf [install|uninstall|restart|status]"
+    echo "✅ 建议：首次登录后，请立即修改密码，并考虑配置 HTTPS 提升安全性。"
     
 }
 
