@@ -6,56 +6,45 @@ curl -sL https://raw.githubusercontent.com/0594/chfs/refs/heads/main/cf6.sh -o /
 ```
 ---
 
-<p align="center">
-  <img src="https://your-image-host.com/chfs-banner.png" alt="CHFS v3.x 轻量HTTP文件服务器" width="800">
-</p>
-
 <h3 align="center">CHFS v3.x - 单文件部署的轻量私有文件服务</h3>
 
 <p align="center">
-  <a href="https://github.com/your-repo/chfs/releases">
+  <a href="https://github.com/0594/chfs/releases">
     <img src="https://img.shields.io/github/v/release/your-repo/chfs?color=blue&label=Latest%20Version" alt="Latest Version">
   </a>
-  <a href="https://github.com/your-repo/chfs/blob/main/LICENSE">
+  <a href="https://github.com/0594/chfs/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License">
   </a>
-  <a href="https://github.com/your-repo/chfs/stargazers">
+  <a href="https://github.com/0594/chfs/stargazers">
     <img src="https://img.shields.io/github/stars/your-repo/chfs?style=social" alt="GitHub Stars">
   </a>
-</p>
-
-<p align="center">
-  <img src="https://your-image-host.com/demo.gif" alt="快速部署演示" width="700">
 </p>
 
 <p align="center">
   无需依赖 · 单二进制文件运行 · 30秒搭建私有文件共享服务
 </p>
 
-
 ---
 
-二、快速开始区（用户第一眼就能上手）
-```markdown
 🚀 30秒快速启动
+
 方式1：直接运行
+
+下载对应平台二进制（以Linux x64为例），一键启动，共享当前目录
 ```bash
-下载对应平台二进制（以Linux x64为例）
-wget https://github.com/your-repo/chfs/releases/download/v3.1/chfs-linux-amd64-v3.1.zip
+wget https://github.com/0594/chfs/releases/download/v3.1/chfs-linux-amd64-v3.1.zip
 unzip chfs-linux-amd64-v3.1.zip
 chmod +x chfs
-
-一键启动，共享当前目录
 ./chfs -port=8080 -path=./share
 ```
 
 方式2：一键部署脚本（推荐）
+
+> 执行我们提供的自动化部署脚本
 ```bash
-执行我们提供的自动化部署脚本
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/your-repo/chfs/main/scripts/chfs-deploy.sh)"
+curl -sL https://raw.githubusercontent.com/0594/chfs/refs/heads/main/cf6.sh -o /root/chfs.sh && chmod +x /root/chfs.sh && sudo /root/chfs.sh install
 ```
 > 脚本自动完成安装、配置Systemd服务、创建共享目录，执行完成后直接访问 `http://你的IP:8080` 即可使用。
-```
 
 ---
 
@@ -74,7 +63,7 @@ sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/your-repo/chfs/main
 ---
 
 四、配置参考区（直接复用之前整理的v3.x完整参数）
-```markdown
+
 ⚙️ v3.x 完整配置示例
 创建 `chfs.ini` 即可自定义所有参数：
 ```ini
@@ -96,7 +85,7 @@ max-upload-size=0
 log-path=/opt/chfs/log/chfs.log
 ```
 修改后执行 `systemctl restart chfs` 即可生效。
-```
+
 
 ---
 
