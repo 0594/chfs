@@ -57,23 +57,42 @@ install_service() {
     # 2. 下载并解压 (如果二进制文件不存在)
     if [[ ! -f "${BIN_FILE}" ]]; then
         local zip_file="/tmp/chfs-${VERSION}.zip"
-        log_info "正在下载安装包..."
-        curl -L -o "${zip_file}" "${DOWNLOAD_URL}"
+        
+        if [[ ! -f "${zip_file}" ]]; then
+            log_info "正在下载安装包..."
+            curl -L -o "${zip_file}" "${DOWNLOAD_URL}"
+        else
+            log_info "发现缓存安装包，跳过下载。"
+        fi
         
         log_info "正在解压..."
         unzip -o "${zip_file}" -d "${INSTALL_DIR}"
         rm -f "${zip_file}"
         
-        # 智能重命名二进制文件
+        # 【修正】智能查找并重命名二进制文件
         if [[ ! -f "${BIN_FILE}" ]]; then
-            local found_bin=$(find ${INSTALL_DIR} -maxdepth 1 -type f -executable -name "chfs*" | head -n 1)
-            if [[ -n "$found_bin" ]]; then
-                mv "$found_bin" "${BIN_FILE}"
+            local found_bin=""
+            # 1. 优先查找以 chfs 开头的普通文件（去掉 -executable 限制）
+            found_bin=$(find "${INSTALL_DIR}" -maxdepth 1 -type f -name "chfs*" | head -n 1)
+            
+            # 2. 如果没找到，尝试查找目录下唯一的非配置/非压缩文件（兜底策略）
+            if [[ -z "${found_bin}" ]]; then
+                found_bin=$(find "${INSTALL_DIR}" -maxdepth 1 -type f ! -name "*.ini" ! -name "*.zip" ! -name "*.sh" | head -n 1)
+            fi
+
+            if [[ -n "${found_bin}" ]]; then
+                log_info "检测到文件: $(basename ${found_bin}) -> 重命名为 chfs"
+                mv "${found_bin}" "${BIN_FILE}"
             else
-                log_error "解压后未找到可执行文件。"
+                log_error "解压目录为空或无法识别主程序文件。"
             fi
         fi
+        
+        # 【关键】无论之前权限如何，此处强制赋予执行权限
         chmod +x "${BIN_FILE}"
+        log_info "二进制文件准备就绪: ${BIN_FILE}"
+    else
+        log_info "二进制文件已存在，跳过下载解压。"
     fi
 
     # 3. 创建运行时目录
