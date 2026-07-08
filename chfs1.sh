@@ -32,24 +32,22 @@ check_root() {
 
 install_service() {
     log_info "正在安装 CHFS v${VERSION}..."
-    
-    # 1. 创建目录
-    mkdir -p ${INSTALL_DIR}/{share,log}
-    chmod 755 ${INSTALL_DIR}/share
+
+    # 1. 确保安装目录存在
+    mkdir -p ${INSTALL_DIR}
 
     # 2. 下载并解压 (如果二进制文件不存在)
     if [[ ! -f "${BIN_FILE}" ]]; then
         local zip_file="/tmp/chfs-${VERSION}.zip"
         log_info "正在下载安装包..."
         curl -L -o "${zip_file}" "${DOWNLOAD_URL}"
-        
+
         log_info "正在解压..."
         unzip -o "${zip_file}" -d "${INSTALL_DIR}"
         rm -f "${zip_file}"
-        
+
         # 确保二进制文件存在并赋权
         if [[ ! -f "${BIN_FILE}" ]]; then
-            # 尝试查找解压后的实际文件名（防止版本命名差异）
             local found_bin=$(find ${INSTALL_DIR} -maxdepth 1 -type f -executable -name "chfs*" | head -n 1)
             if [[ -n "$found_bin" ]]; then
                 mv "$found_bin" "${BIN_FILE}"
@@ -60,7 +58,11 @@ install_service() {
         chmod +x "${BIN_FILE}"
     fi
 
-    # 3. 生成配置文件 (如果不存在)
+    # 3. 创建运行时目录 (share, log)
+    mkdir -p ${INSTALL_DIR}/{share,log}
+    chmod 755 ${INSTALL_DIR}/share
+
+    # 4. 生成配置文件 (如果不存在)
     if [[ ! -f "${INI_FILE}" ]]; then
         cat > "${INI_FILE}" <<EOF
 # CHFS Config
@@ -70,7 +72,7 @@ allow-upload=true
 EOF
         log_info "已生成默认配置文件: ${INI_FILE}"
     fi
-
+    
     # 4. 创建 Systemd 服务
     cat > "${SERVICE_FILE}" <<EOF
 [Unit]
