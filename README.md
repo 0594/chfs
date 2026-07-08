@@ -1,11 +1,3 @@
-✅ 使用说明
-
-一键脚本： 
-```bash
-curl -sL https://raw.githubusercontent.com/0594/chfs/refs/heads/main/cf6.sh -o /root/chfs.sh && chmod +x /root/chfs.sh && sudo /root/chfs.sh install
-```
----
-
 <h3 align="center">CHFS v3.x - 单文件部署的轻量私有文件服务</h3>
 
 <p align="center">
