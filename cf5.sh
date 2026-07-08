@@ -153,6 +153,6 @@ case "${1}" in
     restart) systemctl restart ${APP_NAME}; log_info "服务已重启。" ;;
     status) show_status ;;
     *) 
-      echo "用法: $0 {install|uninstall|restart|status}"
+      echo " 用法: $0 {install|uninstall|restart|status} "
       exit 1 ;;
 esac
