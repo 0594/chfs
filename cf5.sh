@@ -118,6 +118,8 @@ EOF
     setup_cf_command
     
     log_info "✅ 安装完成！现在可以直接使用 'cf' 命令。"
+    log_info "用法[install|uninstall|restart|status]"
+    log_info "配置文件路径：${INSTALL_DIR}/${APP_NAME}.ini""
 }
 
 uninstall_service() {
