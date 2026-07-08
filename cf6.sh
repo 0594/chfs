@@ -123,7 +123,7 @@ EOF
     
     log_info "安装完成！现在您可以直接使用 'cf' 命令进行管理。"
     log_info "用法[install|uninstall|restart|status]"
-    log_info "配置文件路径：${INSTALL_DIR}/${APP_NAME}.ini""
+    log_info "配置文件路径：${INSTALL_DIR}/${APP_NAME}.ini"
 }
 
 uninstall_service() {
