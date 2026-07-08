@@ -105,7 +105,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=${BIN_FILE} --config=${INI_FILE}
+ExecStart=${BIN_FILE} -file=${INI_FILE}
 Restart=on-failure
 WorkingDirectory=${INSTALL_DIR}
 
