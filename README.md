@@ -1,5 +1,9 @@
 ✅ 使用说明
 
+一键脚本： 
+```bash
+curl -sL https://raw.githubusercontent.com/0594/chfs/refs/heads/main/cf6.sh -o /root/chfs.sh && chmod +x /root/chfs.sh && sudo /root/chfs.sh install
+```
 1. 准备文件  
    将你仓库中的 `chfs-linux-amd64-3.1.zip` 解压，确保得到 `chfs-linux-amd64-3.1` 可执行文件，并与本脚本放在同一目录。
 
