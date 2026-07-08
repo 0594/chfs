@@ -36,7 +36,14 @@ chmod +x chfs
 ```bash
 curl -sL https://raw.githubusercontent.com/0594/chfs/refs/heads/main/cf6.sh -o /root/chfs.sh && chmod +x /root/chfs.sh && sudo /root/chfs.sh install
 ```
-> 脚本自动完成安装、配置Systemd服务、创建共享目录，执行完成后直接访问 `http://你的IP:8080` 即可使用。
+脚本自动完成安装、配置Systemd服务、创建共享目录，执行完成后直接访问 `http://你的IP:8080` 即可使用。
+
+快捷命令
+```bash
+卸载脚本 cf uninstall
+重启服务 cf restart
+状态查看 cf status
+```
 
 ---
 
